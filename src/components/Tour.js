@@ -1,32 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-const Tour = ({ id, image, info, price, name, removeTour }) => {
-  const [readMore, setReadMore] = useState(false);
-
+const Tour = ({tour, removeTour}) => {
+    const [showMore, setShowMore] = useState(false);
   return (
-    <article className="single-tour border rounded shadow p-4">
-      <img src={image} alt={name} className="w-full h-64 object-cover rounded" />
-      <div className="tour-info my-4">
-        <h2 className="text-xl font-semibold">{name}</h2>
-        <h3 className="tour-price text-blue-600 font-bold text-lg">${price}</h3>
-      </div>
-      <p className="mb-2">
-        {readMore ? info : `${info.substring(0, 200)}...`}
-        <button
-          onClick={() => setReadMore(!readMore)}
-          className="text-blue-500 ml-2"
-        >
-          {readMore ? 'See less' : 'Show more'}
-        </button>
-      </p>
-      <button
-        onClick={() => removeTour(id)}
-        className="delete-btn mt-2 bg-red-500 text-white px-4 py-2 rounded"
-      >
-        Delete Tour
-      </button>
-    </article>
-  );
-};
+    <div>
+        <div style={{
+            border: '1px solid gray',
+            width: "300px",
+            padding: "10px",
+             }}>
+            <img src={tour.image} width={'100%'} height={'200px'}/>
+            <p>{tour.name}</p>
+            <p>Price: ${tour.price}</p>
 
-export default Tour;
+            <p id={`tour-item-para-${tour.id}`}>{showMore ? tour.info : tour.info.substring(0, 200)}
+                <button id={`see-more-${tour.id}`} onClick={()=>setShowMore(!showMore)} style={{style: 'none', border: "none", background:"none", color:"blue", cursor: 'pointer'}}>
+                    {showMore ? "Show less" : "See more"}
+                </button>
+            </p>
+            <button  onClick={()=>removeTour(tour.id)}
+            id={`delete-btn-${tour.id}`}
+            style={{
+                width: "100%",
+                height: "30px",
+                background: "red",
+                color: "white",
+                border: "none",
+                cursor: 'pointer',
+                borderRadius: "10px",
+            }}>Remove tour</button>
+        </div>
+    </div>
+  )
+}
+
+export default Tour
